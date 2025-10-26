@@ -6,9 +6,16 @@ fn main() {
     io::stdin().read_line(&mut path).unwrap();
     let path = path.trim();
 
-    if fs::metadata(path).is_ok() {
-        println!("success");
-    } else {
-        println!("failure");
+    match fs::metadata(path) {
+        Ok(metadata) => {
+            if metadata.is_file() {
+                println!("success");
+            } else {
+                println!("failure");
+            }
+        }
+        Err(_) => {
+            println!("failure");
+        }
     }
 }
